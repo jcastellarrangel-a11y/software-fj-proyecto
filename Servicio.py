@@ -13,14 +13,14 @@ class Servicio(ABC):
         self._nombre = nombre
         self._precio_base = precio_base
 
-    # Encapsulación
+#  -----------------Encapsulación -----------------
     def get_nombre(self):
         return self._nombre
 
     def get_precio_base(self):
         return self._precio_base
 
-    # Métodos abstractos
+#  ---------------Métodos abstractos --------------
     @abstractmethod
     def calcular_costo(self, tiempo):
         pass
@@ -28,4 +28,4 @@ class Servicio(ABC):
     @abstractmethod
     def descripcion(self):
         pass
-      
+
