@@ -1,35 +1,54 @@
-from excepciones import DatoInvalidoError
+# cliente.py
+# Clase Cliente con validaciones robustas
+import re
+from Excepciones import ClienteInvalidoError, EmailInvalidoError, TelefonoInvalidoError
 
 class Cliente:
-    def __init__(self, nombre, identificacion, correo):
-        self.set_nombre(nombre)
-        self.set_identificacion(identificacion)
-        self.set_correo(correo)
-
-    # Encapsulación
-    def get_nombre(self):
-        return self.__nombre
-
-    def set_nombre(self, nombre):
-        if not nombre or not isinstance(nombre, str):
-            raise DatoInvalidoError("Nombre inválido")
-        self.__nombre = nombre
-
-    def get_identificacion(self):
-        return self.__identificacion
-
-    def set_identificacion(self, identificacion):
-        if not identificacion or len(str(identificacion)) < 5:
-            raise DatoInvalidoError("Identificación inválida")
-        self.__identificacion = identificacion
-
-    def get_correo(self):
-        return self.__correo
-
-    def set_correo(self, correo):
-        if "@" not in correo:
-            raise DatoInvalidoError("Correo inválido")
-        self.__correo = correo
-
+    """Clase que representa un cliente con validaciones"""
+    
+    def __init__(self, nombre, email, telefono):
+        self._nombre = None
+        self._email = None
+        self._telefono = None
+        
+        self.nombre = nombre
+        self.email = email
+        self.telefono = telefono
+    
+    @property
+    def nombre(self):
+        return self._nombre
+    
+    @nombre.setter
+    def nombre(self, valor):
+        if not valor or len(valor.strip()) < 2:
+            raise ClienteInvalidoError("El nombre debe tener al menos 2 caracteres")
+        self._nombre = valor.strip()
+    
+    @property
+    def email(self):
+        return self._email
+    
+    @email.setter
+    def email(self, valor):
+        patron = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        if not re.match(patron, valor):
+            raise EmailInvalidoError(f"El email '{valor}' no es válido")
+        self._email = valor.strip()
+    
+    @property
+    def telefono(self):
+        return self._telefono
+    
+    @telefono.setter
+    def telefono(self, valor):
+        if not valor or len(valor) < 7 or len(valor) > 15:
+            raise TelefonoInvalidoError(f"El teléfono '{valor}' no es válido. Debe tener entre 7 y 15 dígitos")
+        self._telefono = valor.strip()
+    
     def mostrar_info(self):
-        return f"Cliente: {self.__nombre} | ID: {self.__identificacion} | Correo: {self.__correo}"
+        """Devuelve la información del cliente"""
+        return f"Cliente: {self.nombre} - Email: {self.email} - Teléfono: {self.telefono}"
+    
+    def __str__(self):
+        return self.mostrar_info()

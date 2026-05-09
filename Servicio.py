@@ -1,31 +1,28 @@
+# servicio.py
+# Clase abstracta Servicio
 from abc import ABC, abstractmethod
 
 class Servicio(ABC):
-
-    def __init__(self, nombre, precio_base):
-
-        if not nombre:
-            raise ValueError("Nombre inválido")
-
-        if precio_base <= 0:
-            raise ValueError("Precio inválido")
-
-        self._nombre = nombre
-        self._precio_base = precio_base
-
-#  -----------------Encapsulación -----------------
-    def get_nombre(self):
-        return self._nombre
-
-    def get_precio_base(self):
-        return self._precio_base
-
-#  ---------------Métodos abstractos --------------
+    """Clase abstracta que define la plantilla para todos los servicios"""
+    
+    def __init__(self, nombre, tipo):
+        self.nombre = nombre
+        self.tipo = tipo
+    
     @abstractmethod
-    def calcular_costo(self, tiempo):
+    def calcular_costo(self, duracion=1, **kwargs):
+        """Calcula el costo del servicio"""
         pass
-
+    
     @abstractmethod
-    def descripcion(self):
+    def describir(self):
+        """Devuelve una descripción del servicio"""
         pass
-
+    
+    @abstractmethod
+    def validar(self):
+        """Valida que los datos del servicio sean correctos"""
+        pass
+    
+    def __str__(self):
+        return f"{self.tipo}: {self.nombre}"
