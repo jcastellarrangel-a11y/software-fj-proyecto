@@ -1,3 +1,4 @@
+
 # equipo.py
 # Servicio de alquiler de equipos
 from Servicio import Servicio
