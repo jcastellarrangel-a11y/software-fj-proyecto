@@ -29,3 +29,4 @@ class Sala(Servicio):
     
     def __str__(self):
         return f"Sala: {self.nombre} (Capacidad: {self.capacidad})"
+
